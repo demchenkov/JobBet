@@ -45,10 +45,6 @@ public class Startup
         services.Configure<ApiBehaviorOptions>(options => 
             options.SuppressModelStateInvalidFilter = true);
 
-        // In production, the Angular files will be served from this directory
-        services.AddSpaStaticFiles(configuration => 
-            configuration.RootPath = "ClientApp/dist");
-
         services.AddOpenApiDocument(configure =>
         {
             configure.Title = "JobBet API";
@@ -82,11 +78,7 @@ public class Startup
         app.UseHealthChecks("/health");
         app.UseHttpsRedirection();
         app.UseStaticFiles();
-        if (!env.IsDevelopment())
-        {
-            app.UseSpaStaticFiles();
-        }
-
+       
         app.UseSwaggerUi3(settings =>
         {
             settings.Path = "/api";
@@ -104,20 +96,6 @@ public class Startup
                 name: "default",
                 pattern: "{controller}/{action=Index}/{id?}");
             endpoints.MapRazorPages();
-        });
-
-        app.UseSpa(spa =>
-        {
-                // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                // see https://go.microsoft.com/fwlink/?linkid=864501
-
-                spa.Options.SourcePath = "ClientApp";
-
-            if (env.IsDevelopment())
-            {
-                    //spa.UseAngularCliServer(npmScript: "start");
-                    spa.UseProxyToSpaDevelopmentServer(Configuration["SpaBaseUrl"] ?? "http://localhost:4200");
-            }
         });
     }
 }
