@@ -28,9 +28,12 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
         _dateTime = dateTime;
     }
 
-    public DbSet<TodoList> TodoLists => Set<TodoList>();
+    public DbSet<Language> Languages => Set<Language>();
+    public DbSet<Skill> Skills => Set<Skill>();
+    public DbSet<LanguageSkill> LanguageSkills => Set<LanguageSkill>();
+    public DbSet<Project> Projects => Set<Project>();
+    public DbSet<Freelancer> Freelancers => Set<Freelancer>();
 
-    public DbSet<TodoItem> TodoItems => Set<TodoItem>();
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
     {

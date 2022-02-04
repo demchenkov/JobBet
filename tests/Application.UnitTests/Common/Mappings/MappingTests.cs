@@ -1,7 +1,6 @@
 ﻿using System.Runtime.Serialization;
 using AutoMapper;
 using JobBet.Application.Common.Mappings;
-using JobBet.Application.TodoLists.Queries.GetTodos;
 using JobBet.Domain.Entities;
 using NUnit.Framework;
 
@@ -27,8 +26,8 @@ public class MappingTests
     }
 
     [Test]
-    [TestCase(typeof(TodoList), typeof(TodoListDto))]
-    [TestCase(typeof(TodoItem), typeof(TodoItemDto))]
+    [TestCase(typeof(Project), typeof(object))]
+    [TestCase(typeof(Project), typeof(object))]
     public void ShouldSupportMappingFromSourceToDestination(Type source, Type destination)
     {
         var instance = GetInstanceOf(source);
