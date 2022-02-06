@@ -35,8 +35,5 @@ public class FreelancerConfiguration : IEntityTypeConfiguration<Freelancer>
 
         builder.HasMany(t => t.LanguageSkills)
             .WithMany(t => t.Freelancers);
-
-        builder.HasMany(x => x.Projects)
-            .WithOne();
     }
 }

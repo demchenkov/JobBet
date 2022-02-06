@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace JobBet.Infrastructure.Persistence.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class IniialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -68,6 +68,23 @@ namespace JobBet.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Freelancers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: false),
+                    AvatarUrl = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Freelancers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Keys",
                 columns: table => new
                 {
@@ -83,6 +100,19 @@ namespace JobBet.Infrastructure.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Keys", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Languages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Languages", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -106,21 +136,16 @@ namespace JobBet.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TodoLists",
+                name: "Skills",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Colour_Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastModified = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TodoLists", x => x.Id);
+                    table.PrimaryKey("PK_Skills", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -230,17 +255,17 @@ namespace JobBet.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TodoItems",
+                name: "Projects",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ListId = table.Column<int>(type: "int", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Note = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Priority = table.Column<int>(type: "int", nullable: false),
-                    Reminder = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Done = table.Column<bool>(type: "bit", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: false),
+                    ExperienceLevel = table.Column<int>(type: "int", nullable: false),
+                    ProjectType = table.Column<int>(type: "int", nullable: true),
+                    Price = table.Column<decimal>(type: "NUMERIC(10,5)", nullable: false),
+                    FreelancerId = table.Column<int>(type: "int", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModified = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -248,11 +273,79 @@ namespace JobBet.Infrastructure.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TodoItems", x => x.Id);
+                    table.PrimaryKey("PK_Projects", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TodoItems_TodoLists_ListId",
-                        column: x => x.ListId,
-                        principalTable: "TodoLists",
+                        name: "FK_Projects_Freelancers_FreelancerId",
+                        column: x => x.FreelancerId,
+                        principalTable: "Freelancers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LanguageSkills",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Level = table.Column<int>(type: "int", nullable: false),
+                    LanguageId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LanguageSkills", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_LanguageSkills_Languages_LanguageId",
+                        column: x => x.LanguageId,
+                        principalTable: "Languages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FreelancerSkill",
+                columns: table => new
+                {
+                    FreelancersId = table.Column<int>(type: "int", nullable: false),
+                    SkillsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FreelancerSkill", x => new { x.FreelancersId, x.SkillsId });
+                    table.ForeignKey(
+                        name: "FK_FreelancerSkill_Freelancers_FreelancersId",
+                        column: x => x.FreelancersId,
+                        principalTable: "Freelancers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FreelancerSkill_Skills_SkillsId",
+                        column: x => x.SkillsId,
+                        principalTable: "Skills",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FreelancerLanguageSkill",
+                columns: table => new
+                {
+                    FreelancersId = table.Column<int>(type: "int", nullable: false),
+                    LanguageSkillsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FreelancerLanguageSkill", x => new { x.FreelancersId, x.LanguageSkillsId });
+                    table.ForeignKey(
+                        name: "FK_FreelancerLanguageSkill_Freelancers_FreelancersId",
+                        column: x => x.FreelancersId,
+                        principalTable: "Freelancers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FreelancerLanguageSkill_LanguageSkills_LanguageSkillsId",
+                        column: x => x.LanguageSkillsId,
+                        principalTable: "LanguageSkills",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -308,9 +401,24 @@ namespace JobBet.Infrastructure.Persistence.Migrations
                 column: "Expiration");
 
             migrationBuilder.CreateIndex(
+                name: "IX_FreelancerLanguageSkill_LanguageSkillsId",
+                table: "FreelancerLanguageSkill",
+                column: "LanguageSkillsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FreelancerSkill_SkillsId",
+                table: "FreelancerSkill",
+                column: "SkillsId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Keys_Use",
                 table: "Keys",
                 column: "Use");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LanguageSkills_LanguageId",
+                table: "LanguageSkills",
+                column: "LanguageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PersistedGrants_ConsumedTime",
@@ -333,9 +441,9 @@ namespace JobBet.Infrastructure.Persistence.Migrations
                 columns: new[] { "SubjectId", "SessionId", "Type" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_TodoItems_ListId",
-                table: "TodoItems",
-                column: "ListId");
+                name: "IX_Projects_FreelancerId",
+                table: "Projects",
+                column: "FreelancerId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -359,13 +467,19 @@ namespace JobBet.Infrastructure.Persistence.Migrations
                 name: "DeviceCodes");
 
             migrationBuilder.DropTable(
+                name: "FreelancerLanguageSkill");
+
+            migrationBuilder.DropTable(
+                name: "FreelancerSkill");
+
+            migrationBuilder.DropTable(
                 name: "Keys");
 
             migrationBuilder.DropTable(
                 name: "PersistedGrants");
 
             migrationBuilder.DropTable(
-                name: "TodoItems");
+                name: "Projects");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -374,7 +488,16 @@ namespace JobBet.Infrastructure.Persistence.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "TodoLists");
+                name: "LanguageSkills");
+
+            migrationBuilder.DropTable(
+                name: "Skills");
+
+            migrationBuilder.DropTable(
+                name: "Freelancers");
+
+            migrationBuilder.DropTable(
+                name: "Languages");
         }
     }
 }
