@@ -12,8 +12,6 @@ public class Project : AuditableEntity
     
     public ProjectType? ProjectType { get; set; }
     
-    public decimal Price { get; set; }
-
-    public int? FreelancerId { get; set; }
-    public Freelancer Freelancer { get; set; } = null!;
+    public int? ExecutorId { get; set; }
+    public Freelancer Executor { get; set; } = null!;
 }

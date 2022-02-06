@@ -1,6 +1,4 @@
-﻿using JobBet.Domain.Entities;
-using JobBet.Domain.ValueObjects;
-using JobBet.Infrastructure.Identity;
+﻿using JobBet.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 
 namespace JobBet.Infrastructure.Persistence;

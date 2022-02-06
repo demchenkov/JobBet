@@ -1,4 +1,4 @@
-﻿namespace JobBet.Domain.Entities;
+﻿namespace JobBet.Domain.Enums;
 
 public enum ProjectType
 {

@@ -1,27 +1,18 @@
 {
-  "x-generator": "NSwag v13.9.4.0 (NJsonSchema v10.3.1.0 (Newtonsoft.Json v13.0.0.0))",
+  "x-generator": "NSwag v13.15.7.0 (NJsonSchema v10.6.7.0 (Newtonsoft.Json v13.0.0.0))",
   "openapi": "3.0.0",
   "info": {
     "title": "JobBet API",
     "version": "1.0.0"
   },
   "paths": {
-    "/api/TodoItems": {
+    "/api/project": {
       "get": {
         "tags": [
-          "TodoItems"
+          "Project"
         ],
-        "operationId": "TodoItems_GetTodoItemsWithPagination",
+        "operationId": "Project_GetProjectsWithPagination",
         "parameters": [
-          {
-            "name": "ListId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "x-position": 1
-          },
           {
             "name": "PageNumber",
             "in": "query",
@@ -29,7 +20,7 @@
               "type": "integer",
               "format": "int32"
             },
-            "x-position": 2
+            "x-position": 1
           },
           {
             "name": "PageSize",
@@ -38,7 +29,7 @@
               "type": "integer",
               "format": "int32"
             },
-            "x-position": 3
+            "x-position": 2
           }
         ],
         "responses": {
@@ -47,7 +38,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PaginatedListOfTodoItemBriefDto"
+                  "$ref": "#/components/schemas/PaginatedListOfProjectDto"
                 }
               }
             }
@@ -61,15 +52,15 @@
       },
       "post": {
         "tags": [
-          "TodoItems"
+          "Project"
         ],
-        "operationId": "TodoItems_Create",
+        "operationId": "Project_Create",
         "requestBody": {
           "x-name": "command",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateTodoItemCommand"
+                "$ref": "#/components/schemas/CreateProjectCommand"
               }
             }
           },
@@ -96,12 +87,47 @@
         ]
       }
     },
-    "/api/TodoItems/{id}": {
+    "/api/project/{id}": {
+      "get": {
+        "tags": [
+          "Project"
+        ],
+        "operationId": "Project_GetProjectById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectDetailsDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
       "put": {
         "tags": [
-          "TodoItems"
+          "Project"
         ],
-        "operationId": "TodoItems_Update",
+        "operationId": "Project_Update",
         "parameters": [
           {
             "name": "id",
@@ -119,7 +145,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateTodoItemCommand"
+                "$ref": "#/components/schemas/UpdateProjectCommand"
               }
             }
           },
@@ -147,9 +173,9 @@
       },
       "delete": {
         "tags": [
-          "TodoItems"
+          "Project"
         ],
-        "operationId": "TodoItems_Delete",
+        "operationId": "Project_Delete",
         "parameters": [
           {
             "name": "id",
@@ -182,16 +208,17 @@
         ]
       }
     },
-    "/api/TodoItems/UpdateItemDetails": {
+    "/api/project/{id}/executor": {
       "put": {
         "tags": [
-          "TodoItems"
+          "Project"
         ],
-        "operationId": "TodoItems_UpdateItemDetails",
+        "operationId": "Project_ChooseExecutor",
         "parameters": [
           {
             "name": "id",
-            "in": "query",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -204,7 +231,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateTodoItemDetailCommand"
+                "$ref": "#/components/schemas/SetProjectExecutorCommand"
               }
             }
           },
@@ -229,225 +256,19 @@
             "JWT": []
           }
         ]
-      }
-    },
-    "/api/TodoLists": {
-      "get": {
-        "tags": [
-          "TodoLists"
-        ],
-        "operationId": "TodoLists_Get",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TodosVm"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
-      },
-      "post": {
-        "tags": [
-          "TodoLists"
-        ],
-        "operationId": "TodoLists_Create",
-        "requestBody": {
-          "x-name": "command",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateTodoListCommand"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 1
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
-      }
-    },
-    "/api/TodoLists/{id}": {
-      "get": {
-        "tags": [
-          "TodoLists"
-        ],
-        "operationId": "TodoLists_Get2",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "x-position": 1
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/octet-stream": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
-      },
-      "put": {
-        "tags": [
-          "TodoLists"
-        ],
-        "operationId": "TodoLists_Update",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "x-position": 1
-          }
-        ],
-        "requestBody": {
-          "x-name": "command",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateTodoListCommand"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 2
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/octet-stream": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
-      },
-      "delete": {
-        "tags": [
-          "TodoLists"
-        ],
-        "operationId": "TodoLists_Delete",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "x-position": 1
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/octet-stream": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
-      }
-    },
-    "/api/WeatherForecast": {
-      "get": {
-        "tags": [
-          "WeatherForecast"
-        ],
-        "operationId": "WeatherForecast_Get",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/WeatherForecast"
-                  }
-                }
-              }
-            }
-          }
-        }
       }
     }
   },
   "components": {
     "schemas": {
-      "PaginatedListOfTodoItemBriefDto": {
+      "PaginatedListOfProjectDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "items": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/TodoItemBriefDto"
+              "$ref": "#/components/schemas/ProjectDto"
             }
           },
           "pageNumber": {
@@ -470,42 +291,7 @@
           }
         }
       },
-      "TodoItemBriefDto": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "listId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "title": {
-            "type": "string",
-            "nullable": true
-          },
-          "done": {
-            "type": "boolean"
-          }
-        }
-      },
-      "CreateTodoItemCommand": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "listId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "title": {
-            "type": "string",
-            "nullable": true
-          }
-        }
-      },
-      "UpdateTodoItemCommand": {
+      "ProjectDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -517,81 +303,49 @@
             "type": "string",
             "nullable": true
           },
-          "done": {
-            "type": "boolean"
-          }
-        }
-      },
-      "UpdateTodoItemDetailCommand": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "listId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "priority": {
-            "$ref": "#/components/schemas/PriorityLevel"
-          },
-          "note": {
+          "description": {
             "type": "string",
+            "nullable": true
+          },
+          "experienceLevel": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "projectType": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ProjectType"
+              }
+            ]
+          },
+          "price": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "freelancerId": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           }
         }
       },
-      "PriorityLevel": {
+      "ProjectType": {
         "type": "integer",
         "description": "",
         "x-enumNames": [
-          "None",
-          "Low",
-          "Medium",
-          "High"
+          "OneTime",
+          "PartTime",
+          "FullTime"
         ],
         "enum": [
           0,
           1,
-          2,
-          3
+          2
         ]
       },
-      "TodosVm": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "priorityLevels": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/PriorityLevelDto"
-            }
-          },
-          "lists": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TodoListDto"
-            }
-          }
-        }
-      },
-      "PriorityLevelDto": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "value": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          }
-        }
-      },
-      "TodoListDto": {
+      "ProjectDetailsDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -603,19 +357,73 @@
             "type": "string",
             "nullable": true
           },
-          "colour": {
+          "description": {
             "type": "string",
             "nullable": true
           },
-          "items": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TodoItemDto"
-            }
+          "experienceLevel": {
+            "$ref": "#/components/schemas/ExperienceLevel"
+          },
+          "projectType": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ProjectType"
+              }
+            ]
+          },
+          "executorId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         }
       },
-      "TodoItemDto": {
+      "ExperienceLevel": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "Entry",
+          "Intermediate",
+          "Expert"
+        ],
+        "enum": [
+          0,
+          1,
+          2
+        ]
+      },
+      "CreateProjectCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "projectType": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ProjectType"
+              }
+            ]
+          },
+          "experienceLevel": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ExperienceLevel"
+              }
+            ]
+          }
+        }
+      },
+      "UpdateProjectCommand": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -623,69 +431,44 @@
             "type": "integer",
             "format": "int32"
           },
-          "listId": {
-            "type": "integer",
-            "format": "int32"
-          },
           "title": {
             "type": "string",
             "nullable": true
           },
-          "done": {
-            "type": "boolean"
-          },
-          "priority": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "note": {
+          "description": {
             "type": "string",
             "nullable": true
+          },
+          "projectType": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ProjectType"
+              }
+            ]
+          },
+          "experienceLevel": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ExperienceLevel"
+              }
+            ]
           }
         }
       },
-      "CreateTodoListCommand": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "title": {
-            "type": "string",
-            "nullable": true
-          }
-        }
-      },
-      "UpdateTodoListCommand": {
+      "SetProjectExecutorCommand": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "id": {
             "type": "integer",
-            "format": "int32"
-          },
-          "title": {
-            "type": "string",
+            "format": "int32",
             "nullable": true
-          }
-        }
-      },
-      "WeatherForecast": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "date": {
-            "type": "string",
-            "format": "date-time"
           },
-          "temperatureC": {
+          "executorId": {
             "type": "integer",
-            "format": "int32"
-          },
-          "temperatureF": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "summary": {
-            "type": "string",
+            "format": "int32",
             "nullable": true
           }
         }

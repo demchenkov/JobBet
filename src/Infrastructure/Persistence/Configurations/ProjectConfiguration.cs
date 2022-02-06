@@ -15,13 +15,9 @@ public class ProjectConfiguration : IEntityTypeConfiguration<Project>
         builder.Property(t => t.Description)
             .HasMaxLength(2000)
             .IsRequired();
-        
-        builder.Property(t => t.Price)
-            .HasColumnType("NUMERIC(10,5)")
-            .IsRequired();
 
-        builder.HasOne(t => t.Freelancer)
+        builder.HasOne(t => t.Executor)
             .WithMany(x => x.Projects)
-            .HasForeignKey(x => x.FreelancerId);
+            .HasForeignKey(x => x.ExecutorId);
     }
 }

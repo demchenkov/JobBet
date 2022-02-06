@@ -35,6 +35,8 @@ public class Startup
         services.AddHealthChecks()
             .AddDbContextCheck<ApplicationDbContext>();
 
+        services.Configure<RouteOptions>(options => options.LowercaseUrls = true); 
+        
         services.AddControllersWithViews(options =>
             options.Filters.Add<ApiExceptionFilterAttribute>())
                 .AddFluentValidation(x => x.AutomaticValidationEnabled = false);
