@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using StackExchange.Redis;
 
 namespace JobBet.Infrastructure;
 
@@ -30,6 +31,9 @@ public static class DependencyInjection
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
 
+        var multiplexer = ConnectionMultiplexer.Connect(configuration.GetConnectionString("Redis"));
+        services.AddSingleton<IConnectionMultiplexer>(multiplexer);
+        
         services.AddScoped<IDomainEventService, DomainEventService>();
 
         services
@@ -43,6 +47,7 @@ public static class DependencyInjection
         services.AddTransient<IDateTime, DateTimeService>();
         services.AddTransient<IIdentityService, IdentityService>();
         services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
+        services.AddTransient<IBettingService, BettingService>();
 
         services.AddAuthentication()
             .AddIdentityServerJwt();

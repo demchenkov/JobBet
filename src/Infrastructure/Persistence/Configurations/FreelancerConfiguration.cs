@@ -25,7 +25,9 @@ public class FreelancerConfiguration : IEntityTypeConfiguration<Freelancer>
         builder.Property(t => t.Description)
             .HasMaxLength(2000)
             .IsRequired();
-        
+
+        builder.HasIndex(x => x.UserId);
+
         builder.Property(t => t.AvatarUrl)
             .HasMaxLength(500)
             .IsRequired();

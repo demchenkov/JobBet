@@ -6,12 +6,12 @@
     "version": "1.0.0"
   },
   "paths": {
-    "/api/project": {
+    "/api/projects": {
       "get": {
         "tags": [
-          "Project"
+          "Projects"
         ],
-        "operationId": "Project_GetProjectsWithPagination",
+        "operationId": "Projects_GetProjectsWithPagination",
         "parameters": [
           {
             "name": "PageNumber",
@@ -43,18 +43,13 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        }
       },
       "post": {
         "tags": [
-          "Project"
+          "Projects"
         ],
-        "operationId": "Project_Create",
+        "operationId": "Projects_Create",
         "requestBody": {
           "x-name": "command",
           "content": {
@@ -79,20 +74,15 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        }
       }
     },
-    "/api/project/{id}": {
+    "/api/projects/{id}": {
       "get": {
         "tags": [
-          "Project"
+          "Projects"
         ],
-        "operationId": "Project_GetProjectById",
+        "operationId": "Projects_GetProjectById",
         "parameters": [
           {
             "name": "id",
@@ -116,18 +106,13 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        }
       },
       "put": {
         "tags": [
-          "Project"
+          "Projects"
         ],
-        "operationId": "Project_Update",
+        "operationId": "Projects_Update",
         "parameters": [
           {
             "name": "id",
@@ -164,18 +149,13 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        }
       },
       "delete": {
         "tags": [
-          "Project"
+          "Projects"
         ],
-        "operationId": "Project_Delete",
+        "operationId": "Projects_Delete",
         "parameters": [
           {
             "name": "id",
@@ -200,20 +180,60 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        }
       }
     },
-    "/api/project/{id}/executor": {
+    "/api/projects/{id}/bet": {
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "operationId": "Projects_BetProject",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BetProjectCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/projects/{id}/executor": {
       "put": {
         "tags": [
-          "Project"
+          "Projects"
         ],
-        "operationId": "Project_ChooseExecutor",
+        "operationId": "Projects_ChooseExecutor",
         "parameters": [
           {
             "name": "id",
@@ -250,12 +270,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        }
       }
     }
   },
@@ -454,6 +469,22 @@
                 "$ref": "#/components/schemas/ExperienceLevel"
               }
             ]
+          }
+        }
+      },
+      "BetProjectCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "price": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
           }
         }
       },

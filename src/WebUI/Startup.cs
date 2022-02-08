@@ -5,6 +5,9 @@ using JobBet.Infrastructure.Persistence;
 using JobBet.WebUI.Filters;
 using JobBet.WebUI.Services;
 using FluentValidation.AspNetCore;
+using JobBet.Application.Common.Configurations;
+using JobBet.WebUI.Hubs;
+using JobBet.WebUI.Workers;
 using Microsoft.AspNetCore.Mvc;
 using NSwag;
 using NSwag.Generation.Processors.Security;
@@ -42,10 +45,15 @@ public class Startup
                 .AddFluentValidation(x => x.AutomaticValidationEnabled = false);
 
         services.AddRazorPages();
+        services.AddSignalR();
 
         // Customise default API behaviour
         services.Configure<ApiBehaviorOptions>(options => 
             options.SuppressModelStateInvalidFilter = true);
+
+        services.Configure<QueueNames>(Configuration.GetSection("QueueNames"));
+        
+        services.AddHostedService<BettingWorker>();
 
         services.AddOpenApiDocument(configure =>
         {
@@ -98,6 +106,7 @@ public class Startup
                 name: "default",
                 pattern: "{controller}/{action=Index}/{id?}");
             endpoints.MapRazorPages();
+            endpoints.MapHub<BettingHub>("/betting");
         });
     }
 }

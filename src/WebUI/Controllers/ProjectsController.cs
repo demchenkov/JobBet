@@ -1,4 +1,5 @@
 ﻿using JobBet.Application.Common.Models;
+using JobBet.Application.Projects.Commands.BetProject;
 using JobBet.Application.Projects.Commands.CreateProject;
 using JobBet.Application.Projects.Commands.DeleteProject;
 using JobBet.Application.Projects.Commands.SetProjectExecutor;
@@ -10,8 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JobBet.WebUI.Controllers;
 
-[Authorize]
-public class ProjectController : ApiControllerBase
+// [Authorize]
+public class ProjectsController : ApiControllerBase
 {
     [HttpGet]
     public async Task<ActionResult<PaginatedList<ProjectDto>>> GetProjectsWithPagination([FromQuery] GetProjectsQuery query)
@@ -33,6 +34,19 @@ public class ProjectController : ApiControllerBase
     
     [HttpPut("{id:int}")]
     public async Task<ActionResult> Update(int id, UpdateProjectCommand command)
+    {
+        if (id != command.Id)
+        {
+            return BadRequest();
+        }
+    
+        await Mediator.Send(command);
+    
+        return NoContent();
+    }
+    
+    [HttpPost("{id:int}/bet")]
+    public async Task<ActionResult> BetProject(int id, BetProjectCommand command)
     {
         if (id != command.Id)
         {
