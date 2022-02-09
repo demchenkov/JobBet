@@ -33,6 +33,7 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
     public DbSet<LanguageSkill> LanguageSkills => Set<LanguageSkill>();
     public DbSet<Project> Projects => Set<Project>();
     public DbSet<Freelancer> Freelancers => Set<Freelancer>();
+    public DbSet<Client> Clients => Set<Client>();
 
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())

@@ -12,6 +12,11 @@ public class Project : AuditableEntity
     
     public ProjectType? ProjectType { get; set; }
     
-    public int? ExecutorId { get; set; }
+    public int ClientId { get; set; }
+    public Client Client { get; set; } = default!;
+    
+    public int ExecutorId { get; set; }
     public Freelancer Executor { get; set; } = null!;
+
+    public Auction? Auction { get; set; }
 }

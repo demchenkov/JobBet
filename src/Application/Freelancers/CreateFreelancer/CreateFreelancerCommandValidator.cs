@@ -5,6 +5,16 @@ public class CreateFreelancerCommandValidator : AbstractValidator<CreateFreelanc
 {
     public CreateFreelancerCommandValidator()
     {
-        // TODO: add validation rules here
+        RuleFor(x => x.FirstName)
+            .MinimumLength(3);
+        
+        RuleFor(x => x.LastName)
+            .MinimumLength(3);
+        
+        RuleFor(x => x.Title)
+            .MinimumLength(5);
+        
+        RuleFor(x => x.Description)
+            .MinimumLength(20);
     }
 }

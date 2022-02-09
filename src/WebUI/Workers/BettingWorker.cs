@@ -12,20 +12,17 @@ namespace JobBet.WebUI.Workers;
 
 public class BettingWorker : BackgroundService
 {
-    private readonly ILogger<BettingWorker> _logger;
-    private readonly IHubContext<BettingHub> _clockHub;
+    private readonly IHubContext<BettingHub> _bettingHub;
     private readonly IConnectionMultiplexer _connectionMultiplexer;
     private readonly QueueNames _queueNames;
     private readonly IServiceScopeFactory _serviceScopeFactory;
 
     public BettingWorker(
-        ILogger<BettingWorker> logger, 
-        IHubContext<BettingHub> clockHub, 
+        IHubContext<BettingHub> bettingHub, 
         IConnectionMultiplexer connectionMultiplexer, 
         IOptions<QueueNames> queueNames, IServiceScopeFactory serviceScopeFactory)
     {
-        _logger = logger;
-        _clockHub = clockHub;
+        _bettingHub = bettingHub;
         _connectionMultiplexer = connectionMultiplexer;
         _serviceScopeFactory = serviceScopeFactory;
         _queueNames = queueNames.Value ?? throw new ArgumentNullException(nameof(queueNames));
@@ -51,6 +48,6 @@ public class BettingWorker : BackgroundService
         await using var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         var freelancer = await context.Freelancers.FirstAsync(x => x.Id == package.FreelancerId);
             
-        await _clockHub.Clients.Group(package.ProjectId.ToString()).SendAsync("newBetDetected", freelancer, package.Price);
+        await _bettingHub.Clients.Group(package.ProjectId.ToString()).SendAsync("newBetDetected", freelancer, package.Price);
     }
 }

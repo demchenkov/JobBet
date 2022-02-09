@@ -30,7 +30,7 @@ public class SetProjectExecutorCommandHandler : IRequestHandler<SetProjectExecut
             throw new NotFoundException(nameof(Project), request.Id!);
         }
 
-        entity.ExecutorId = request.ExecutorId;
+        entity.ExecutorId = request.ExecutorId!.Value;
         
         await _context.SaveChangesAsync(cancellationToken);
         

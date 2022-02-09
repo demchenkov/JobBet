@@ -36,7 +36,7 @@ public class CreateFreelancerCommandHandler : IRequestHandler<CreateFreelancerCo
             LastName = request.LastName,
             Title = request.Title,
             Description = request.Description,
-            // AvatarUrl = "",
+            AvatarUrl = string.Empty,
             UserId = _currentUserService.UserId!,
         };
 
