@@ -1,6 +1,7 @@
 ﻿using JobBet.Application.Common.Exceptions;
 using JobBet.Application.Common.Interfaces;
 using JobBet.Domain.Entities;
+using JobBet.Domain.Enums;
 using MediatR;
 
 namespace JobBet.Application.Projects.Commands.SetProjectExecutor;
@@ -31,6 +32,7 @@ public class SetProjectExecutorCommandHandler : IRequestHandler<SetProjectExecut
         }
 
         entity.ExecutorId = request.ExecutorId!.Value;
+        entity.Status = ProjectStatus.InProgress;
         
         await _context.SaveChangesAsync(cancellationToken);
         

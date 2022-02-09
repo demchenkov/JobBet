@@ -34,6 +34,9 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
     public DbSet<Project> Projects => Set<Project>();
     public DbSet<Freelancer> Freelancers => Set<Freelancer>();
     public DbSet<Client> Clients => Set<Client>();
+    public DbSet<ProjectRating> ProjectRatings => Set<ProjectRating>();
+    public DbSet<ClientAverageRating> ClientAverageRatings => Set<ClientAverageRating>();
+    public DbSet<FreelancerAverageRating> FreelancerAverageRatings => Set<FreelancerAverageRating>();
 
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())

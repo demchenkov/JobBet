@@ -31,6 +31,7 @@ public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand,
             Description = request.Description,
             ExperienceLevel = request.ExperienceLevel!.Value,
             ProjectType = request.ProjectType,
+            Status = ProjectStatus.Created,
         };
         
         _context.Projects.Add(entity);

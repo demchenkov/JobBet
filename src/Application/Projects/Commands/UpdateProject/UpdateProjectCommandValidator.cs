@@ -22,5 +22,8 @@ public class UpdateProjectCommandValidator : AbstractValidator<UpdateProjectComm
         
         RuleFor(x => x.ProjectType)
             .IsInEnum();
+        
+        RuleFor(x => x.Status)
+            .IsInEnum();
     }
 }

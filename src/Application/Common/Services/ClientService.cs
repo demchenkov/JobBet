@@ -4,23 +4,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JobBet.Application.Common.Services;
 
-public class FreelancerService : IFreelancerService
+public class ClientService : IClientService
 {
     private readonly IApplicationDbContext _context;
     private readonly ICurrentUserService _currentUserService;
 
-    public FreelancerService(IApplicationDbContext context, ICurrentUserService currentUserService)
+    public ClientService(IApplicationDbContext context, ICurrentUserService currentUserService)
     {
         _context = context;
         _currentUserService = currentUserService;
     }
 
-    public Task<Freelancer?> GetFreelancerByUserIdAsync(string userId, CancellationToken cancellationToken = default)
+    public Task<Client?> GetClientByUserIdAsync(string userId, CancellationToken cancellationToken = default)
     {
-        return _context.Freelancers.FirstOrDefaultAsync(x => x.UserId == userId, cancellationToken);
+        return _context.Clients.FirstOrDefaultAsync(x => x.UserId == userId, cancellationToken);
     }
 
-    public Task<Freelancer?> GetCurrentUserFreelancerAsync(CancellationToken cancellationToken = default)
+    public Task<Client?> GetCurrentUserClientAsync(CancellationToken cancellationToken = default)
     {
         var userId = _currentUserService.UserId;
 
@@ -29,6 +29,6 @@ public class FreelancerService : IFreelancerService
             throw new Exception("Cannot find current user id");
         }
         
-        return GetFreelancerByUserIdAsync(userId, cancellationToken);
+        return GetClientByUserIdAsync(userId, cancellationToken)!;
     }
 }

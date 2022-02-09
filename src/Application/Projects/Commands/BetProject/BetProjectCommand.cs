@@ -1,4 +1,5 @@
 ﻿using JobBet.Application.Common.Interfaces;
+using JobBet.Domain.Entities;
 using MediatR;
 
 namespace JobBet.Application.Projects.Commands.BetProject;
@@ -24,7 +25,7 @@ public class BetProjectCommandHandler : IRequestHandler<BetProjectCommand>
     {
         var freelancer = await _freelancerService.GetCurrentUserFreelancerAsync(cancellationToken);
         
-        await _bettingService.MakeBetAsync(freelancer.Id, request.Id!.Value, request.Price!.Value);
+        await _bettingService.MakeBetAsync(freelancer!.Id, request.Id!.Value, request.Price!.Value);
         
         return Unit.Value;
     }

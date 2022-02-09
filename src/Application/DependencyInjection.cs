@@ -21,6 +21,8 @@ public static class DependencyInjection
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
 
         services.AddTransient<IFreelancerService, FreelancerService>();
+        services.AddTransient<IClientService, ClientService>();
+        services.AddScoped<IProjectService, ProjectService>();
 
         return services;
     }

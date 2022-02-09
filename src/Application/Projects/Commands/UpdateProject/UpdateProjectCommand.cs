@@ -14,6 +14,7 @@ public class UpdateProjectCommand : IRequest
     public string? Description { get; set; }
     public ProjectType? ProjectType { get; set; }
     public ExperienceLevel? ExperienceLevel { get; set; }
+    public ProjectStatus? Status { get; set; }
 }
 
 public class UpdateProjectCommandHandler : IRequestHandler<UpdateProjectCommand>
@@ -40,6 +41,8 @@ public class UpdateProjectCommandHandler : IRequestHandler<UpdateProjectCommand>
         entity.Description = request.Description ?? entity.Description;
         entity.ProjectType = request.ProjectType ?? entity.ProjectType;
         entity.ExperienceLevel = request.ExperienceLevel ?? entity.ExperienceLevel;
+        entity.Status = request.Status ?? entity.Status;
+        
 
         await _context.SaveChangesAsync(cancellationToken);
 

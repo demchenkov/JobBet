@@ -16,6 +16,8 @@ public interface IApplicationDbContext
     DbSet<LanguageSkill> LanguageSkills { get; }
     
     DbSet<Client> Clients { get; }
+    
+    DbSet<ProjectRating> ProjectRatings { get;  }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

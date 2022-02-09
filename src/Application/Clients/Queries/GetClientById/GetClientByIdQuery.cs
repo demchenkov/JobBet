@@ -3,6 +3,7 @@ using JobBet.Application.Common.Exceptions;
 using JobBet.Application.Common.Interfaces;
 using JobBet.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace JobBet.Application.Clients.Queries.GetClientById;
 
@@ -25,7 +26,8 @@ public class GetClientByIdQueryHandler : IRequestHandler<GetClientByIdQuery, Cli
     public async Task<ClientDetailsDto> Handle(GetClientByIdQuery request, CancellationToken cancellationToken)
     {
         var entity = await _context.Clients
-            .FindAsync(new object[] { request.Id }, cancellationToken);
+            .Include(x => x.Rating)
+            .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
         
         if (entity == null)
         {

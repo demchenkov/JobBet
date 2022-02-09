@@ -8,6 +8,8 @@ public class ProjectConfiguration : IEntityTypeConfiguration<Project>
 {
     public void Configure(EntityTypeBuilder<Project> builder)
     {
+        builder.Ignore(e => e.DomainEvents);
+        
         builder.Property(t => t.Title)
             .HasMaxLength(200)
             .IsRequired();
