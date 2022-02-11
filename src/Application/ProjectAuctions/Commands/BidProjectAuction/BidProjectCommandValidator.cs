@@ -2,13 +2,13 @@
 using JobBet.Application.Common.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace JobBet.Application.Projects.Commands.BetProject;
+namespace JobBet.Application.ProjectAuctions.Commands.BidProjectAuction;
 
-public class BetProjectCommandValidator: AbstractValidator<BetProjectCommand>
+public class BidProjectCommandValidator: AbstractValidator<BidProjectCommand>
 {
     private readonly IApplicationDbContext _context;
     
-    public BetProjectCommandValidator(IApplicationDbContext context)
+    public BidProjectCommandValidator(IApplicationDbContext context)
     {
         _context = context;
 
@@ -22,6 +22,6 @@ public class BetProjectCommandValidator: AbstractValidator<BetProjectCommand>
             .Include(x => x.Auction)
             .FirstOrDefaultAsync(x => x.Id == projectId, cancellationToken);
 
-        return project?.Auction != null && project.Auction.EndTime > DateTimeOffset.UtcNow;
+        return project?.Auction != null && project.Auction.FinishTime > DateTimeOffset.UtcNow;
     }
 }

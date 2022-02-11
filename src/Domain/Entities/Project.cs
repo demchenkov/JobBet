@@ -37,7 +37,7 @@ public class Project : AuditableEntity, IHasDomainEvent
     public int? ExecutorId { get; set; }
     public Freelancer? Executor { get; set; } = null!;
 
-    public Auction? Auction { get; set; }
+    public ProjectAuction? Auction { get; set; }
 
     public List<DomainEvent> DomainEvents { get; set; }  = new List<DomainEvent>();
 }

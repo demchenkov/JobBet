@@ -1,6 +1,7 @@
 ﻿using JobBet.Application.Common.Interfaces;
 using JobBet.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace JobBet.Application.ProjectRatings.Commands.RateProject;
 
@@ -24,7 +25,8 @@ public class RateProjectCommandHandler : IRequestHandler<RateProjectCommand>
     public async Task<Unit> Handle(RateProjectCommand request, CancellationToken cancellationToken)
     {
         int projectId = request.ProjectId!.Value;
-        var entity = new ProjectRating { ProjectId = projectId };
+        var entity = await _context.ProjectRatings
+                .FirstAsync(x => x.ProjectId == projectId, cancellationToken);
         
         if (await _projectService.IsCurrentUserIsProjectOwnerAsync(projectId))
         {
@@ -36,7 +38,7 @@ public class RateProjectCommandHandler : IRequestHandler<RateProjectCommand>
             entity.ClientScore = request.Score!;
         }
 
-        _context.ProjectRatings.Add(entity);
+        _context.ProjectRatings.Update(entity);
         await _context.SaveChangesAsync(cancellationToken);
         
         return Unit.Value;

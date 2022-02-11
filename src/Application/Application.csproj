@@ -21,6 +21,7 @@
 
     <ItemGroup>
       <Folder Include="Clients\Queries\GetMyClient" />
+      <Folder Include="TalentAuction" />
     </ItemGroup>
 
 </Project>

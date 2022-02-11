@@ -18,6 +18,10 @@ public interface IApplicationDbContext
     DbSet<Client> Clients { get; }
     
     DbSet<ProjectRating> ProjectRatings { get;  }
+    
+    DbSet<ProjectAuction> ProjectAuctions { get; }
+    
+    DbSet<TalentAuction> TalentAuctions { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

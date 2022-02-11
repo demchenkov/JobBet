@@ -1,12 +1,10 @@
 ﻿using JobBet.Application.Common.Models;
-using JobBet.Application.Projects.Commands.BetProject;
 using JobBet.Application.Projects.Commands.CreateProject;
 using JobBet.Application.Projects.Commands.DeleteProject;
 using JobBet.Application.Projects.Commands.SetProjectExecutor;
 using JobBet.Application.Projects.Commands.UpdateProject;
 using JobBet.Application.Projects.Queries.GetProjectById;
 using JobBet.Application.Projects.Queries.GetProjectsWithPagination;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JobBet.WebUI.Controllers;
@@ -44,20 +42,7 @@ public class ProjectsController : ApiControllerBase
     
         return NoContent();
     }
-    
-    [HttpPost("{id:int}/bet")]
-    public async Task<ActionResult> BetProject(int id, BetProjectCommand command)
-    {
-        if (id != command.Id)
-        {
-            return BadRequest();
-        }
-    
-        await Mediator.Send(command);
-    
-        return NoContent();
-    }
-    
+
     [HttpPut("{id:int}/executor")]
     public async Task<ActionResult> ChooseExecutor(int id, SetProjectExecutorCommand command)
     {

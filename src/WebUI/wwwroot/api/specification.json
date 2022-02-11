@@ -255,51 +255,6 @@
         }
       }
     },
-    "/api/projects/{id}/bet": {
-      "post": {
-        "tags": [
-          "Projects"
-        ],
-        "operationId": "Projects_BetProject",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "x-position": 1
-          }
-        ],
-        "requestBody": {
-          "x-name": "command",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/BetProjectCommand"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 2
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/octet-stream": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/projects/{id}/executor": {
       "put": {
         "tags": [
@@ -617,22 +572,6 @@
           1,
           2
         ]
-      },
-      "BetProjectCommand": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "price": {
-            "type": "number",
-            "format": "decimal",
-            "nullable": true
-          }
-        }
       },
       "SetProjectExecutorCommand": {
         "type": "object",

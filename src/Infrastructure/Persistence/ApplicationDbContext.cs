@@ -4,6 +4,7 @@ using JobBet.Domain.Common;
 using JobBet.Domain.Entities;
 using JobBet.Infrastructure.Identity;
 using Duende.IdentityServer.EntityFramework.Options;
+using JobBet.Domain.ValueObjects;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -35,6 +36,9 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
     public DbSet<Freelancer> Freelancers => Set<Freelancer>();
     public DbSet<Client> Clients => Set<Client>();
     public DbSet<ProjectRating> ProjectRatings => Set<ProjectRating>();
+    public DbSet<ProjectAuction> ProjectAuctions => Set<ProjectAuction>();
+    public DbSet<TalentAuction> TalentAuctions => Set<TalentAuction>();
+    
     public DbSet<ClientAverageRating> ClientAverageRatings => Set<ClientAverageRating>();
     public DbSet<FreelancerAverageRating> FreelancerAverageRatings => Set<FreelancerAverageRating>();
 

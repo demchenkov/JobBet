@@ -1,4 +1,4 @@
-﻿namespace JobBet.Domain.Entities;
+﻿namespace JobBet.Domain.ValueObjects;
 
 public class FreelancerAverageRating
 {

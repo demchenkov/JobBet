@@ -1,4 +1,5 @@
 ﻿using JobBet.Domain.Entities;
+using JobBet.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
