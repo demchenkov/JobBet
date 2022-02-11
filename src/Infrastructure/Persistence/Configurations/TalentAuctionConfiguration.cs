@@ -10,7 +10,7 @@ public class TalentAuctionConfiguration : IEntityTypeConfiguration<TalentAuction
     {
         builder.Property(x => x.InitialPrice)
             .HasPrecision(10, 2);
-        
+
         builder.HasOne(x => x.Lot)
             .WithMany()
             .HasForeignKey(x => x.LotId);

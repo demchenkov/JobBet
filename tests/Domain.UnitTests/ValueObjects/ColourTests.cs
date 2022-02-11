@@ -1,6 +1,6 @@
-﻿using JobBet.Domain.Exceptions;
+﻿using FluentAssertions;
+using JobBet.Domain.Exceptions;
 using JobBet.Domain.ValueObjects;
-using FluentAssertions;
 using NUnit.Framework;
 
 namespace JobBet.Domain.UnitTests.ValueObjects;
@@ -10,9 +10,9 @@ public class ColourTests
     [Test]
     public void ShouldReturnCorrectColourCode()
     {
-        var code = "#FFFFFF";
+        string code = "#FFFFFF";
 
-        var colour = Colour.From(code);
+        Colour colour = Colour.From(code);
 
         colour.Code.Should().Be(code);
     }
@@ -20,7 +20,7 @@ public class ColourTests
     [Test]
     public void ToStringReturnsCode()
     {
-        var colour = Colour.White;
+        Colour colour = Colour.White;
 
         colour.ToString().Should().Be(colour.Code);
     }
@@ -36,7 +36,7 @@ public class ColourTests
     [Test]
     public void ShouldPerformExplicitConversionGivenSupportedColourCode()
     {
-        var colour = (Colour)"#FFFFFF";
+        Colour colour = (Colour)"#FFFFFF";
 
         colour.Should().Be(Colour.White);
     }

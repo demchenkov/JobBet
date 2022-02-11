@@ -15,7 +15,7 @@ public class CreateJobAuctionCommand : IRequest
 public class CreateJobAuctionCommandHandler : IRequestHandler<CreateJobAuctionCommand>
 {
     private readonly IApplicationDbContext _context;
-    
+
     public CreateJobAuctionCommandHandler(IApplicationDbContext context)
     {
         _context = context;
@@ -23,17 +23,17 @@ public class CreateJobAuctionCommandHandler : IRequestHandler<CreateJobAuctionCo
 
     public async Task<Unit> Handle(CreateJobAuctionCommand request, CancellationToken cancellationToken)
     {
-        var entity = new JobAuction
+        JobAuction entity = new JobAuction
         {
             StartTime = request.StartTime!.Value,
             FinishTime = request.FinishTime!.Value,
             LotId = request.JobId!.Value,
-            InitialPrice = request.InitialPrice!.Value,
+            InitialPrice = request.InitialPrice!.Value
         };
 
         _context.JobAuctions.Add(entity);
         await _context.SaveChangesAsync(cancellationToken);
-        
+
         return Unit.Value;
     }
 }

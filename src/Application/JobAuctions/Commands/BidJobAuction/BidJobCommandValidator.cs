@@ -1,13 +1,14 @@
 ﻿using FluentValidation;
 using JobBet.Application.Common.Interfaces;
+using JobBet.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace JobBet.Application.JobAuctions.Commands.BidJobAuction;
 
-public class BidJobCommandValidator: AbstractValidator<BidJobCommand>
+public class BidJobCommandValidator : AbstractValidator<BidJobCommand>
 {
     private readonly IApplicationDbContext _context;
-    
+
     public BidJobCommandValidator(IApplicationDbContext context)
     {
         _context = context;
@@ -18,7 +19,7 @@ public class BidJobCommandValidator: AbstractValidator<BidJobCommand>
 
     public async Task<bool> ExistAuctionAndBeActive(int? jobId, CancellationToken cancellationToken)
     {
-        var job = await _context.Jobs
+        Job? job = await _context.Jobs
             .Include(x => x.Auction)
             .FirstOrDefaultAsync(x => x.Id == jobId, cancellationToken);
 

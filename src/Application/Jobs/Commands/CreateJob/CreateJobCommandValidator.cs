@@ -10,7 +10,7 @@ public class CreateJobCommandValidator : AbstractValidator<CreateJobCommand>
             .NotEmpty()
             .MaximumLength(5)
             .MaximumLength(200);
-        
+
         RuleFor(x => x.Description)
             .NotEmpty()
             .MaximumLength(10)
@@ -19,7 +19,7 @@ public class CreateJobCommandValidator : AbstractValidator<CreateJobCommand>
         RuleFor(x => x.ExperienceLevel)
             .NotNull()
             .IsInEnum();
-        
+
         RuleFor(x => x.JobType)
             .NotNull()
             .IsInEnum();

@@ -1,4 +1,5 @@
 ﻿using JobBet.Application.Common.Interfaces;
+using JobBet.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace JobBet.Application.Common.Services;
@@ -17,8 +18,8 @@ public class JobService : IJobService
     public async Task<bool> IsUserIsJobOwnerAsync(int jobId, string userId)
     {
         _ = userId ?? throw new ArgumentNullException(nameof(userId));
-        
-        var job = await _context.Jobs
+
+        Job? job = await _context.Jobs
             .Include(x => x.Client)
             .FirstOrDefaultAsync(x => x.Id == jobId);
 
@@ -28,8 +29,8 @@ public class JobService : IJobService
     public async Task<bool> IsUserIsJobExecutorAsync(int jobId, string userId)
     {
         _ = userId ?? throw new ArgumentNullException(nameof(userId));
-        
-        var job = await _context.Jobs
+
+        Job? job = await _context.Jobs
             .Include(x => x.Executor)
             .FirstOrDefaultAsync(x => x.Id == jobId);
 

@@ -7,7 +7,7 @@ namespace JobBet.Application.Freelancers.CreateFreelancer;
 public class CreateFreelancerCommand : IRequest
 {
     public string? FirstName { get; set; }
-    
+
     public string? LastName { get; set; }
 
     public string? Title { get; set; }
@@ -30,14 +30,14 @@ public class CreateFreelancerCommandHandler : IRequestHandler<CreateFreelancerCo
 
     public async Task<Unit> Handle(CreateFreelancerCommand request, CancellationToken cancellationToken)
     {
-        var entity = new Freelancer
+        Freelancer entity = new Freelancer
         {
             FirstName = request.FirstName,
             LastName = request.LastName,
             Title = request.Title,
             Description = request.Description,
             AvatarUrl = string.Empty,
-            UserId = _currentUserService.UserId!,
+            UserId = _currentUserService.UserId!
         };
 
         // entity.Skills.AddRange(null);
@@ -47,7 +47,7 @@ public class CreateFreelancerCommandHandler : IRequestHandler<CreateFreelancerCo
         _context.Freelancers.Add(entity);
 
         await _context.SaveChangesAsync(cancellationToken);
-        
+
         return Unit.Value;
     }
 }

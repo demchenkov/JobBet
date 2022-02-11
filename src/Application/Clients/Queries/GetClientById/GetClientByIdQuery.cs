@@ -25,10 +25,10 @@ public class GetClientByIdQueryHandler : IRequestHandler<GetClientByIdQuery, Cli
 
     public async Task<ClientDetailsDto> Handle(GetClientByIdQuery request, CancellationToken cancellationToken)
     {
-        var entity = await _context.Clients
+        Client? entity = await _context.Clients
             .Include(x => x.Rating)
             .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
-        
+
         if (entity == null)
         {
             throw new NotFoundException(nameof(Client), request.Id);

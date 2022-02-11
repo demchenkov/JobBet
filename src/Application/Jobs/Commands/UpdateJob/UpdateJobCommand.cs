@@ -29,8 +29,8 @@ public class UpdateJobCommandHandler : IRequestHandler<UpdateJobCommand>
 
     public async Task<Unit> Handle(UpdateJobCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _context.Jobs
-            .FindAsync(new object[] { request.Id }, cancellationToken);
+        Job? entity = await _context.Jobs
+            .FindAsync(new object[] {request.Id}, cancellationToken);
 
         if (entity == null)
         {
@@ -42,7 +42,7 @@ public class UpdateJobCommandHandler : IRequestHandler<UpdateJobCommand>
         entity.JobType = request.JobType ?? entity.JobType;
         entity.ExperienceLevel = request.ExperienceLevel ?? entity.ExperienceLevel;
         entity.Status = request.Status ?? entity.Status;
-        
+
 
         await _context.SaveChangesAsync(cancellationToken);
 

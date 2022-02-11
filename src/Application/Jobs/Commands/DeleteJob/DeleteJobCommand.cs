@@ -22,8 +22,8 @@ public class DeleteJobCommandHandler : IRequestHandler<DeleteJobCommand>
 
     public async Task<Unit> Handle(DeleteJobCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _context.Jobs
-            .FindAsync(new object[] { request.Id }, cancellationToken);
+        Job? entity = await _context.Jobs
+            .FindAsync(new object[] {request.Id}, cancellationToken);
 
         if (entity == null)
         {
@@ -35,4 +35,4 @@ public class DeleteJobCommandHandler : IRequestHandler<DeleteJobCommand>
 
         return Unit.Value;
     }
-} 
+}

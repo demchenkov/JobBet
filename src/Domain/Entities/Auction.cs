@@ -1,6 +1,6 @@
 ﻿namespace JobBet.Domain.Entities;
 
-public abstract class Auction<TKey, TLot> 
+public abstract class Auction<TKey, TLot>
     where TLot : class
     where TKey : IEquatable<TKey>
 

@@ -1,4 +1,5 @@
 ﻿using JobBet.Application.Common.Interfaces;
+using JobBet.Domain.Entities;
 using MediatR;
 
 namespace JobBet.Application.JobAuctions.Commands.BidJobAuction;
@@ -22,11 +23,10 @@ public class BidJobCommandHandler : IRequestHandler<BidJobCommand>
 
     public async Task<Unit> Handle(BidJobCommand request, CancellationToken cancellationToken)
     {
-        var freelancer = await _freelancerService.GetCurrentUserFreelancerAsync(cancellationToken);
-        
+        Freelancer? freelancer = await _freelancerService.GetCurrentUserFreelancerAsync(cancellationToken);
+
         await _bettingService.MakeBetAsync(freelancer!.Id, request.Id!.Value, request.Price!.Value);
-        
+
         return Unit.Value;
     }
 }
-

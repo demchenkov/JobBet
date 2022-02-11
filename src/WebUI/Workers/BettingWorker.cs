@@ -1,4 +1,5 @@
 ﻿using JobBet.Application.Common.Configurations;
+using JobBet.Domain.Entities;
 using JobBet.Infrastructure.Persistence;
 using JobBet.Infrastructure.QueuePackages;
 using JobBet.WebUI.Hubs;
@@ -18,8 +19,8 @@ public class BettingWorker : BackgroundService
     private readonly IServiceScopeFactory _serviceScopeFactory;
 
     public BettingWorker(
-        IHubContext<BettingHub> bettingHub, 
-        IConnectionMultiplexer connectionMultiplexer, 
+        IHubContext<BettingHub> bettingHub,
+        IConnectionMultiplexer connectionMultiplexer,
         IOptions<QueueNames> queueNames, IServiceScopeFactory serviceScopeFactory)
     {
         _bettingHub = bettingHub;
@@ -30,24 +31,25 @@ public class BettingWorker : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
-        var messageQueue = await _connectionMultiplexer.GetSubscriber()
+        ChannelMessageQueue? messageQueue = await _connectionMultiplexer.GetSubscriber()
             .SubscribeAsync(_queueNames.BettingQueue);
         messageQueue.OnMessage(EventHandler);
     }
 
     private async Task EventHandler(ChannelMessage channelMessage)
     {
-        var package = JsonConvert.DeserializeObject<BetPackage>(channelMessage.Message);
-        
+        BetPackage? package = JsonConvert.DeserializeObject<BetPackage>(channelMessage.Message);
+
         if (package == null)
         {
             return;
         }
-        
-        using var scope = _serviceScopeFactory.CreateScope();
-        await using var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-        var freelancer = await context.Freelancers.FirstAsync(x => x.Id == package.FreelancerId);
-            
-        await _bettingHub.Clients.Group(package.JobId.ToString()).SendAsync("newBetDetected", freelancer, package.Price);
+
+        using IServiceScope scope = _serviceScopeFactory.CreateScope();
+        await using ApplicationDbContext context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        Freelancer freelancer = await context.Freelancers.FirstAsync(x => x.Id == package.FreelancerId);
+
+        await _bettingHub.Clients.Group(package.JobId.ToString())
+            .SendAsync("newBetDetected", freelancer, package.Price);
     }
 }

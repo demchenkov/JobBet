@@ -3,7 +3,7 @@
 public class LanguageSkill
 {
     public int Id { get; set; }
-    
+
     public LanguageProficiencyLevel Level { get; set; }
 
     public int LanguageId { get; set; }

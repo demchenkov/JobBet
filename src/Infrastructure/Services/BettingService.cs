@@ -22,27 +22,23 @@ public class BettingService : IBettingService
 
     public async Task MakeBetAsync(int freelancerId, int jobId, decimal price)
     {
-        var db = _connection.GetDatabase();
-        
-        var hashSetKey = $"{BettingPrefix}#{jobId}";
-        var bestJobPriceKey = $"{hashSetKey}:best";
-        var formattedPrice = price.ToString(CultureInfo.InvariantCulture);
-        
+        IDatabase? db = _connection.GetDatabase();
+
+        string hashSetKey = $"{BettingPrefix}#{jobId}";
+        string bestJobPriceKey = $"{hashSetKey}:best";
+        string formattedPrice = price.ToString(CultureInfo.InvariantCulture);
+
         await db.HashSetAsync(hashSetKey, $"{freelancerId}", formattedPrice);
-        
+
         string bestPriceStr = await db.StringGetAsync(bestJobPriceKey);
         decimal bestPrice = decimal.TryParse(bestPriceStr, out bestPrice) ? bestPrice : decimal.MaxValue;
-        
+
         if (bestPrice > price)
         {
-            var package = new BetPackage
-            {
-                Price = price,
-                FreelancerId = freelancerId,
-                JobId = jobId,
-            };
+            BetPackage package = new BetPackage {Price = price, FreelancerId = freelancerId, JobId = jobId};
             await db.StringSetAsync(bestJobPriceKey, formattedPrice);
-            await db.PublishAsync(_queueNames.BettingQueue, JsonConvert.SerializeObject(package)); // TODO: think about protobuf or smth like that
+            await db.PublishAsync(_queueNames.BettingQueue,
+                JsonConvert.SerializeObject(package)); // TODO: think about protobuf or smth like that
         }
     }
 }

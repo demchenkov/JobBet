@@ -24,14 +24,14 @@ public class GetJobAuctionByIdQueryHandler : IRequestHandler<GetJobAuctionByIdQu
 
     public async Task<JobAuctionDetailsDto> Handle(GetJobAuctionByIdQuery request, CancellationToken cancellationToken)
     {
-        var entity = await _context.JobAuctions
-            .FindAsync(new object[] { request.Id }, cancellationToken);
-        
+        JobAuction? entity = await _context.JobAuctions
+            .FindAsync(new object[] {request.Id}, cancellationToken);
+
         if (entity == null)
         {
             throw new NotFoundException(nameof(JobAuction), request.Id);
         }
-        
+
         return _mapper.Map<JobAuctionDetailsDto>(entity);
     }
 }

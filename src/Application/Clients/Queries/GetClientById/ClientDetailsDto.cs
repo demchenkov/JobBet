@@ -7,7 +7,7 @@ namespace JobBet.Application.Clients.Queries.GetClientById;
 public class ClientDetailsDto : IMapFrom<Client>
 {
     public int Id { get; set; }
-    
+
     public string Title { get; set; } = default!;
 
     public double? Score { get; set; }

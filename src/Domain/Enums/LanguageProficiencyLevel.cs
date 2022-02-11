@@ -5,5 +5,5 @@ public enum LanguageProficiencyLevel
     Basic,
     Conversational,
     Fluent,
-    Native,
+    Native
 }

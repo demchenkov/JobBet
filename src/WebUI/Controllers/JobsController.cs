@@ -17,11 +17,11 @@ public class JobsController : ApiControllerBase
     {
         return await Mediator.Send(query);
     }
-    
+
     [HttpGet("{id:int}")]
     public async Task<ActionResult<JobDetailsDto>> GetJobById(int id)
     {
-        return await Mediator.Send(new GetJobByIdQuery { Id = id });
+        return await Mediator.Send(new GetJobByIdQuery {Id = id});
     }
 
     [HttpPost]
@@ -29,7 +29,7 @@ public class JobsController : ApiControllerBase
     {
         return await Mediator.Send(command);
     }
-    
+
     [HttpPut("{id:int}")]
     public async Task<ActionResult> Update(int id, UpdateJobCommand command)
     {
@@ -37,30 +37,30 @@ public class JobsController : ApiControllerBase
         {
             return BadRequest();
         }
-    
+
         await Mediator.Send(command);
-    
+
         return NoContent();
     }
 
-    [HttpPut("{id:int}/executor")]
+    [HttpPatch("{id:int}")]
     public async Task<ActionResult> ChooseExecutor(int id, SetJobExecutorCommand command)
     {
         if (id != command.Id)
         {
             return BadRequest();
         }
-    
+
         await Mediator.Send(command);
-    
+
         return NoContent();
     }
-    
+
     [HttpDelete("{id:int}")]
     public async Task<ActionResult> Delete(int id)
     {
-        await Mediator.Send(new DeleteJobCommand { Id = id });
-    
+        await Mediator.Send(new DeleteJobCommand {Id = id});
+
         return NoContent();
     }
 }

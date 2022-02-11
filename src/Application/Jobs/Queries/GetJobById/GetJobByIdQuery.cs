@@ -24,14 +24,14 @@ public class GetJobByIdQueryHandler : IRequestHandler<GetJobByIdQuery, JobDetail
 
     public async Task<JobDetailsDto> Handle(GetJobByIdQuery request, CancellationToken cancellationToken)
     {
-        var entity = await _context.Jobs
-            .FindAsync(new object[] { request.Id }, cancellationToken);
-        
+        Job? entity = await _context.Jobs
+            .FindAsync(new object[] {request.Id}, cancellationToken);
+
         if (entity == null)
         {
             throw new NotFoundException(nameof(Job), request.Id);
         }
-        
+
         return _mapper.Map<JobDetailsDto>(entity);
     }
 }

@@ -13,6 +13,4 @@ public class BettingHub : Hub
     {
         return Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
     }
-
-    
 }

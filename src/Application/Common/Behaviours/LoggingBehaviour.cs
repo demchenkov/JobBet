@@ -6,11 +6,12 @@ namespace JobBet.Application.Common.Behaviours;
 
 public class LoggingBehaviour<TRequest> : IRequestPreProcessor<TRequest> where TRequest : notnull
 {
-    private readonly ILogger _logger;
     private readonly ICurrentUserService _currentUserService;
     private readonly IIdentityService _identityService;
+    private readonly ILogger _logger;
 
-    public LoggingBehaviour(ILogger<TRequest> logger, ICurrentUserService currentUserService, IIdentityService identityService)
+    public LoggingBehaviour(ILogger<TRequest> logger, ICurrentUserService currentUserService,
+        IIdentityService identityService)
     {
         _logger = logger;
         _currentUserService = currentUserService;
@@ -19,8 +20,8 @@ public class LoggingBehaviour<TRequest> : IRequestPreProcessor<TRequest> where T
 
     public async Task Process(TRequest request, CancellationToken cancellationToken)
     {
-        var requestName = typeof(TRequest).Name;
-        var userId = _currentUserService.UserId ?? string.Empty;
+        string requestName = typeof(TRequest).Name;
+        string userId = _currentUserService.UserId ?? string.Empty;
         string userName = string.Empty;
 
         if (!string.IsNullOrEmpty(userId))

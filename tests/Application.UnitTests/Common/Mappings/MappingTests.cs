@@ -13,7 +13,7 @@ public class MappingTests
 
     public MappingTests()
     {
-        _configuration = new MapperConfiguration(config => 
+        _configuration = new MapperConfiguration(config =>
             config.AddProfile<MappingProfile>());
 
         _mapper = _configuration.CreateMapper();
@@ -30,7 +30,7 @@ public class MappingTests
     [TestCase(typeof(Job), typeof(object))]
     public void ShouldSupportMappingFromSourceToDestination(Type source, Type destination)
     {
-        var instance = GetInstanceOf(source);
+        object instance = GetInstanceOf(source);
 
         _mapper.Map(instance, source, destination);
     }
@@ -38,7 +38,9 @@ public class MappingTests
     private object GetInstanceOf(Type type)
     {
         if (type.GetConstructor(Type.EmptyTypes) != null)
+        {
             return Activator.CreateInstance(type)!;
+        }
 
         // Type without parameterless constructor
         return FormatterServices.GetUninitializedObject(type);

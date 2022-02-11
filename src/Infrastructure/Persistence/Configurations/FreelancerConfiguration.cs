@@ -13,15 +13,15 @@ public class FreelancerConfiguration : IEntityTypeConfiguration<Freelancer>
         builder.Property(t => t.FirstName)
             .HasMaxLength(200)
             .IsRequired();
-        
+
         builder.Property(t => t.LastName)
             .HasMaxLength(200)
             .IsRequired();
-        
+
         builder.Property(t => t.Title)
             .HasMaxLength(200)
             .IsRequired();
-        
+
         builder.Property(t => t.Description)
             .HasMaxLength(2000)
             .IsRequired();

@@ -7,9 +7,9 @@ namespace JobBet.Application.Jobs.Commands.SetJobExecutor;
 
 public class SetJobExecutorCommandValidator : AbstractValidator<SetJobExecutorCommand>
 {
-    private readonly IApplicationDbContext _context;
     private readonly IClientService _clientService;
-    
+    private readonly IApplicationDbContext _context;
+
     public SetJobExecutorCommandValidator(IApplicationDbContext context, IClientService clientService)
     {
         _context = context;
@@ -26,14 +26,14 @@ public class SetJobExecutorCommandValidator : AbstractValidator<SetJobExecutorCo
 
     public async Task<bool> BeOwner(SetJobExecutorCommand command, int? id, CancellationToken cancellationToken)
     {
-        var job = await _context.Jobs.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
-        var currentClient = await _clientService.GetCurrentUserClientAsync(cancellationToken);
-        
+        Job? job = await _context.Jobs.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+        Client? currentClient = await _clientService.GetCurrentUserClientAsync(cancellationToken);
+
         return currentClient!.Id == job?.ClientId;
     }
-    
+
     public Task<bool> ExecutorExist(int? executorId, CancellationToken cancellationToken)
     {
         return _context.Freelancers.AnyAsync(x => x.Id == executorId, cancellationToken);
-    } 
+    }
 }

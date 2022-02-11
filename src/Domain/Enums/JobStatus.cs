@@ -4,5 +4,5 @@ public enum JobStatus
 {
     Created,
     InProgress,
-    Done,
+    Done
 }

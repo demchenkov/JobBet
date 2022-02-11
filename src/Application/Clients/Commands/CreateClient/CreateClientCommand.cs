@@ -22,16 +22,12 @@ public class CreateClientCommandHandler : IRequestHandler<CreateClientCommand>
 
     public async Task<Unit> Handle(CreateClientCommand request, CancellationToken cancellationToken)
     {
-        var entity = new Client()
-        {
-            Title = request.Title!,
-            UserId = _currentUserService.UserId!
-        };
+        Client entity = new Client {Title = request.Title!, UserId = _currentUserService.UserId!};
 
         _context.Clients.Add(entity);
 
         await _context.SaveChangesAsync(cancellationToken);
-        
+
         return Unit.Value;
     }
 }

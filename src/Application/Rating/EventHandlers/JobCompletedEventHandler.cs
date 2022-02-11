@@ -15,11 +15,12 @@ public class JobCompletedEventHandler : INotificationHandler<DomainEventNotifica
         _context = context;
     }
 
-    public async Task Handle(DomainEventNotification<JobCompletedEvent> notification, CancellationToken cancellationToken)
+    public async Task Handle(DomainEventNotification<JobCompletedEvent> notification,
+        CancellationToken cancellationToken)
     {
-        var @event = notification.DomainEvent;
-        var entity = new JobRating { JobId = @event.Job.Id };
-        
+        JobCompletedEvent @event = notification.DomainEvent;
+        JobRating entity = new JobRating {JobId = @event.Job.Id};
+
         _context.JobRatings.Add(entity);
 
         await _context.SaveChangesAsync(cancellationToken);

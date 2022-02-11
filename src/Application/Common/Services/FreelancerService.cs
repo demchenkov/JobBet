@@ -22,13 +22,13 @@ public class FreelancerService : IFreelancerService
 
     public Task<Freelancer?> GetCurrentUserFreelancerAsync(CancellationToken cancellationToken = default)
     {
-        var userId = _currentUserService.UserId;
+        string? userId = _currentUserService.UserId;
 
         if (userId == null)
         {
             throw new Exception("Cannot find current user id");
         }
-        
+
         return GetFreelancerByUserIdAsync(userId, cancellationToken);
     }
 }

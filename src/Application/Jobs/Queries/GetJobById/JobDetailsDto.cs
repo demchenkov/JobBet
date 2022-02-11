@@ -13,8 +13,8 @@ public class JobDetailsDto : IMapFrom<Job>
     public string? Description { get; set; }
 
     public ExperienceLevel ExperienceLevel { get; set; }
-    
+
     public JobType? JobType { get; set; }
-    
+
     public int? ExecutorId { get; set; }
 }

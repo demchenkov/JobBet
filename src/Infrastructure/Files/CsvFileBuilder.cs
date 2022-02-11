@@ -4,5 +4,4 @@ namespace JobBet.Infrastructure.Files;
 
 public class CsvFileBuilder : ICsvFileBuilder
 {
-    
 }

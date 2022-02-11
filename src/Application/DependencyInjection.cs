@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
-using JobBet.Application.Common.Behaviours;
 using FluentValidation;
+using JobBet.Application.Common.Behaviours;
 using JobBet.Application.Common.Interfaces;
 using JobBet.Application.Common.Services;
 using MediatR;

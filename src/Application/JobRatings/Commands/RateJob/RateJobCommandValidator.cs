@@ -10,7 +10,7 @@ public class RateJobCommandValidator : AbstractValidator<RateJobCommand>
 {
     private readonly IApplicationDbContext _context;
     private readonly IJobService _projectService;
-    
+
     public RateJobCommandValidator(IApplicationDbContext context, IJobService projectService)
     {
         _context = context;
@@ -24,7 +24,7 @@ public class RateJobCommandValidator : AbstractValidator<RateJobCommand>
 
     public async Task<bool> JobExist(int? jobId, CancellationToken cancellationToken)
     {
-        var exist = await _context.Jobs.AnyAsync(x => x.Id == jobId, cancellationToken);
+        bool exist = await _context.Jobs.AnyAsync(x => x.Id == jobId, cancellationToken);
         if (!exist)
         {
             throw new NotFoundException(nameof(Job), jobId!);
@@ -32,7 +32,7 @@ public class RateJobCommandValidator : AbstractValidator<RateJobCommand>
 
         return true;
     }
-    
+
     public async Task<bool> BeOwnerOrExecutor(int? jobId, CancellationToken cancellationToken)
     {
         return await _projectService.IsCurrentUserIsJobOwnerAsync(jobId!.Value) ||

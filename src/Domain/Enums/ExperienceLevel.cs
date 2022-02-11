@@ -4,5 +4,5 @@ public enum ExperienceLevel
 {
     Entry,
     Intermediate,
-    Expert,
+    Expert
 }

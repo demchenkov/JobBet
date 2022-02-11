@@ -10,7 +10,7 @@ public class JobAuctionConfiguration : IEntityTypeConfiguration<JobAuction>
     {
         builder.Property(x => x.InitialPrice)
             .HasPrecision(10, 2);
-        
+
         builder.HasOne(x => x.Lot)
             .WithOne(x => x.Auction)
             .HasForeignKey<JobAuction>(x => x.LotId);

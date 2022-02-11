@@ -31,9 +31,9 @@ public static class DependencyInjection
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
 
-        var multiplexer = ConnectionMultiplexer.Connect(configuration.GetConnectionString("Redis"));
+        ConnectionMultiplexer? multiplexer = ConnectionMultiplexer.Connect(configuration.GetConnectionString("Redis"));
         services.AddSingleton<IConnectionMultiplexer>(multiplexer);
-        
+
         services.AddScoped<IDomainEventService, DomainEventService>();
 
         services
@@ -52,7 +52,7 @@ public static class DependencyInjection
         services.AddAuthentication()
             .AddIdentityServerJwt();
 
-        services.AddAuthorization(options => 
+        services.AddAuthorization(options =>
             options.AddPolicy("CanPurge", policy => policy.RequireRole("Administrator")));
 
         return services;

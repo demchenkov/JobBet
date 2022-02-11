@@ -1,12 +1,12 @@
+using FluentValidation.AspNetCore;
 using JobBet.Application;
+using JobBet.Application.Common.Configurations;
 using JobBet.Application.Common.Interfaces;
 using JobBet.Infrastructure;
 using JobBet.Infrastructure.Persistence;
 using JobBet.WebUI.Filters;
-using JobBet.WebUI.Services;
-using FluentValidation.AspNetCore;
-using JobBet.Application.Common.Configurations;
 using JobBet.WebUI.Hubs;
+using JobBet.WebUI.Services;
 using JobBet.WebUI.Workers;
 using Microsoft.AspNetCore.Mvc;
 using NSwag;
@@ -38,33 +38,34 @@ public class Startup
         services.AddHealthChecks()
             .AddDbContextCheck<ApplicationDbContext>();
 
-        services.Configure<RouteOptions>(options => options.LowercaseUrls = true); 
-        
+        services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
+
         services.AddControllersWithViews(options =>
-            options.Filters.Add<ApiExceptionFilterAttribute>())
-                .AddFluentValidation(x => x.AutomaticValidationEnabled = false);
+                options.Filters.Add<ApiExceptionFilterAttribute>())
+            .AddFluentValidation(x => x.AutomaticValidationEnabled = false);
 
         services.AddRazorPages();
         services.AddSignalR();
 
         // Customise default API behaviour
-        services.Configure<ApiBehaviorOptions>(options => 
+        services.Configure<ApiBehaviorOptions>(options =>
             options.SuppressModelStateInvalidFilter = true);
 
         services.Configure<QueueNames>(Configuration.GetSection("QueueNames"));
-        
+
         services.AddHostedService<BettingWorker>();
 
         services.AddOpenApiDocument(configure =>
         {
             configure.Title = "JobBet API";
-            configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
-            {
-                Type = OpenApiSecuritySchemeType.ApiKey,
-                Name = "Authorization",
-                In = OpenApiSecurityApiKeyLocation.Header,
-                Description = "Type into the textbox: Bearer {your JWT token}."
-            });
+            configure.AddSecurity("JWT", Enumerable.Empty<string>(),
+                new OpenApiSecurityScheme
+                {
+                    Type = OpenApiSecuritySchemeType.ApiKey,
+                    Name = "Authorization",
+                    In = OpenApiSecurityApiKeyLocation.Header,
+                    Description = "Type into the textbox: Bearer {your JWT token}."
+                });
 
             configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
         });
@@ -88,7 +89,7 @@ public class Startup
         app.UseHealthChecks("/health");
         app.UseHttpsRedirection();
         app.UseStaticFiles();
-       
+
         app.UseSwaggerUi3(settings =>
         {
             settings.Path = "/api";
@@ -103,8 +104,8 @@ public class Startup
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllerRoute(
-                name: "default",
-                pattern: "{controller}/{action=Index}/{id?}");
+                "default",
+                "{controller}/{action=Index}/{id?}");
             endpoints.MapRazorPages();
             endpoints.MapHub<BettingHub>("/betting");
         });

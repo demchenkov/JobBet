@@ -23,9 +23,9 @@ public class SetJobExecutorCommandHandler : IRequestHandler<SetJobExecutorComman
 
     public async Task<Unit> Handle(SetJobExecutorCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _context.Jobs
+        Job? entity = await _context.Jobs
             .FindAsync(new object[] {request.Id!}, cancellationToken);
-        
+
         if (entity == null)
         {
             throw new NotFoundException(nameof(Job), request.Id!);
@@ -33,9 +33,9 @@ public class SetJobExecutorCommandHandler : IRequestHandler<SetJobExecutorComman
 
         entity.ExecutorId = request.ExecutorId!.Value;
         entity.Status = JobStatus.InProgress;
-        
+
         await _context.SaveChangesAsync(cancellationToken);
-        
+
         return Unit.Value;
     }
 }

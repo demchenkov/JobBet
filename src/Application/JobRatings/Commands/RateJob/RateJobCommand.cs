@@ -25,14 +25,14 @@ public class RateJobCommandHandler : IRequestHandler<RateJobCommand>
     public async Task<Unit> Handle(RateJobCommand request, CancellationToken cancellationToken)
     {
         int jobId = request.JobId!.Value;
-        var entity = await _context.JobRatings
-                .FirstAsync(x => x.JobId == jobId, cancellationToken);
-        
+        JobRating entity = await _context.JobRatings
+            .FirstAsync(x => x.JobId == jobId, cancellationToken);
+
         if (await _projectService.IsCurrentUserIsJobOwnerAsync(jobId))
         {
             entity.FreelancerScore = request.Score!;
         }
-        
+
         if (await _projectService.IsCurrentUserIsJobExecutorAsync(jobId))
         {
             entity.ClientScore = request.Score!;
@@ -40,7 +40,7 @@ public class RateJobCommandHandler : IRequestHandler<RateJobCommand>
 
         _context.JobRatings.Update(entity);
         await _context.SaveChangesAsync(cancellationToken);
-        
+
         return Unit.Value;
     }
 }

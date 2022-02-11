@@ -4,5 +4,5 @@ public enum JobType
 {
     OneTime,
     PartTime,
-    FullTime,
+    FullTime
 }

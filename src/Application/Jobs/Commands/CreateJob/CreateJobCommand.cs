@@ -25,18 +25,18 @@ public class CreateJobCommandHandler : IRequestHandler<CreateJobCommand, int>
 
     public async Task<int> Handle(CreateJobCommand request, CancellationToken cancellationToken)
     {
-        var entity = new Job
+        Job entity = new Job
         {
             Title = request.Title!,
             Description = request.Description,
             ExperienceLevel = request.ExperienceLevel!.Value,
             JobType = request.JobType,
-            Status = JobStatus.Created,
+            Status = JobStatus.Created
         };
-        
+
         _context.Jobs.Add(entity);
         await _context.SaveChangesAsync(cancellationToken);
 
         return entity.Id;
     }
-} 
+}
