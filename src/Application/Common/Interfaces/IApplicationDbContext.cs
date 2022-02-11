@@ -5,7 +5,7 @@ namespace JobBet.Application.Common.Interfaces;
 
 public interface IApplicationDbContext
 {
-    DbSet<Project> Projects { get; }
+    DbSet<Job> Jobs { get; }
 
     DbSet<Freelancer> Freelancers { get; }
     
@@ -17,9 +17,9 @@ public interface IApplicationDbContext
     
     DbSet<Client> Clients { get; }
     
-    DbSet<ProjectRating> ProjectRatings { get;  }
+    DbSet<JobRating> JobRatings { get;  }
     
-    DbSet<ProjectAuction> ProjectAuctions { get; }
+    DbSet<JobAuction> JobAuctions { get; }
     
     DbSet<TalentAuction> TalentAuctions { get; }
 

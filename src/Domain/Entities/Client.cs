@@ -8,7 +8,7 @@ public class Client
     
     public string UserId { get; set; } = default!;
 
-    public List<Project> Projects { get; } = new List<Project>();
+    public List<Job> Jobs { get; } = new List<Job>();
     
     public ClientAverageRating? Rating { get; set; }
 }

@@ -26,8 +26,8 @@ public class MappingTests
     }
 
     [Test]
-    [TestCase(typeof(Project), typeof(object))]
-    [TestCase(typeof(Project), typeof(object))]
+    [TestCase(typeof(Job), typeof(object))]
+    [TestCase(typeof(Job), typeof(object))]
     public void ShouldSupportMappingFromSourceToDestination(Type source, Type destination)
     {
         var instance = GetInstanceOf(source);

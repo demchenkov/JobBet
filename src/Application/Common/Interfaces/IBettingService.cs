@@ -2,5 +2,5 @@
 
 public interface IBettingService
 {
-    Task MakeBetAsync(int freelancerId, int projectId, decimal price);
+    Task MakeBetAsync(int freelancerId, int jobId, decimal price);
 }

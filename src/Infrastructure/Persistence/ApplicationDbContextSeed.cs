@@ -40,82 +40,82 @@ public static class ApplicationDbContextSeed
             await context.SaveChangesAsync();
         }
         
-        if (!context.Projects.Any())
+        if (!context.Jobs.Any())
         {
-            var projects = new List<Project>()
+            var jobs = new List<Job>()
             {
-                new Project
+                new Job
                 {
                     Title = "Test title 1",
                     Description = "Test description 1",
                     ExperienceLevel = ExperienceLevel.Entry,
-                    ProjectType = ProjectType.OneTime,
-                    Status = ProjectStatus.Created,
+                    JobType = JobType.OneTime,
+                    Status = JobStatus.Created,
                     Client = context.Clients.First(), 
                 },
-                new Project
+                new Job
                 {
                     Title = "Test title 2",
                     Description = "Test description 2",
                     ExperienceLevel = ExperienceLevel.Entry,
-                    ProjectType = ProjectType.OneTime,
-                    Status = ProjectStatus.InProgress,
+                    JobType = JobType.OneTime,
+                    Status = JobStatus.InProgress,
                     Client = context.Clients.First(), 
                 },
-                new Project
+                new Job
                 {
                     Title = "Test title 3",
                     Description = "Test description 3",
                     ExperienceLevel = ExperienceLevel.Entry,
-                    ProjectType = ProjectType.OneTime,
-                    Status = ProjectStatus.Done,
+                    JobType = JobType.OneTime,
+                    Status = JobStatus.Done,
                     Client = context.Clients.First(), 
                 },
             };
             
-            context.Projects.AddRange(projects);
+            context.Jobs.AddRange(jobs);
 
             await context.SaveChangesAsync();
         }
 
-        if (!context.ProjectRatings.Any())
+        if (!context.JobRatings.Any())
         {
-            var project = context.Projects.First();
-            var ratings = new List<ProjectRating>()
+            var job = context.Jobs.First();
+            var ratings = new List<JobRating>()
             {
                 new()
                 {
-                    Project = project,
+                    Job = job,
                     ClientScore = 1,
                     FreelancerScore = 1,
                 },
                 new()
                 {
-                    Project = project,
+                    Job = job,
                     ClientScore = 2,
                     FreelancerScore = 2,
                 },
                 new()
                 {
-                    Project = project,
+                    Job = job,
                     ClientScore = 3,
                     FreelancerScore = 3,
                 },
                 new()
                 {
-                    Project = project,
+                    Job = job,
                     ClientScore = 4,
                     FreelancerScore = 4,
                 },
                 new()
                 {
-                    Project = project,
+                    Job = job,
                     ClientScore = 5,
                     FreelancerScore = 5,
                 },
             };
             
-            context.ProjectRatings.AddRange(ratings);
+            context.JobRatings.AddRange(ratings);
 
             await context.SaveChangesAsync();
         }

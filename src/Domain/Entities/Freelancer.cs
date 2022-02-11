@@ -20,7 +20,7 @@ public class Freelancer
 
     public List<LanguageSkill> LanguageSkills { get; set; } = new List<LanguageSkill>();
 
-    public List<Project> Projects { get; } = new List<Project>();
+    public List<Job> Jobs { get; } = new List<Job>();
 
     public FreelancerAverageRating? Rating { get; set; }
 }

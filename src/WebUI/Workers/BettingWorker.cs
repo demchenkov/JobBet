@@ -48,6 +48,6 @@ public class BettingWorker : BackgroundService
         await using var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         var freelancer = await context.Freelancers.FirstAsync(x => x.Id == package.FreelancerId);
             
-        await _bettingHub.Clients.Group(package.ProjectId.ToString()).SendAsync("newBetDetected", freelancer, package.Price);
+        await _bettingHub.Clients.Group(package.JobId.ToString()).SendAsync("newBetDetected", freelancer, package.Price);
     }
 }

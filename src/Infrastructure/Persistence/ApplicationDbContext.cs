@@ -32,11 +32,11 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
     public DbSet<Language> Languages => Set<Language>();
     public DbSet<Skill> Skills => Set<Skill>();
     public DbSet<LanguageSkill> LanguageSkills => Set<LanguageSkill>();
-    public DbSet<Project> Projects => Set<Project>();
+    public DbSet<Job> Jobs => Set<Job>();
     public DbSet<Freelancer> Freelancers => Set<Freelancer>();
     public DbSet<Client> Clients => Set<Client>();
-    public DbSet<ProjectRating> ProjectRatings => Set<ProjectRating>();
-    public DbSet<ProjectAuction> ProjectAuctions => Set<ProjectAuction>();
+    public DbSet<JobRating> JobRatings => Set<JobRating>();
+    public DbSet<JobAuction> JobAuctions => Set<JobAuction>();
     public DbSet<TalentAuction> TalentAuctions => Set<TalentAuction>();
     
     public DbSet<ClientAverageRating> ClientAverageRatings => Set<ClientAverageRating>();

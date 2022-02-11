@@ -22,7 +22,7 @@ public static class DependencyInjection
 
         services.AddTransient<IFreelancerService, FreelancerService>();
         services.AddTransient<IClientService, ClientService>();
-        services.AddScoped<IProjectService, ProjectService>();
+        services.AddScoped<IJobService, JobService>();
 
         return services;
     }

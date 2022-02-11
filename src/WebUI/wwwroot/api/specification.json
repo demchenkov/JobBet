@@ -78,12 +78,12 @@
         }
       }
     },
-    "/api/projects": {
+    "/api/jobs": {
       "get": {
         "tags": [
-          "Projects"
+          "Jobs"
         ],
-        "operationId": "Projects_GetProjectsWithPagination",
+        "operationId": "Jobs_GetJobsWithPagination",
         "parameters": [
           {
             "name": "PageNumber",
@@ -110,7 +110,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PaginatedListOfProjectDto"
+                  "$ref": "#/components/schemas/PaginatedListOfJobDto"
                 }
               }
             }
@@ -119,15 +119,15 @@
       },
       "post": {
         "tags": [
-          "Projects"
+          "Jobs"
         ],
-        "operationId": "Projects_Create",
+        "operationId": "Jobs_Create",
         "requestBody": {
           "x-name": "command",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateProjectCommand"
+                "$ref": "#/components/schemas/CreateJobCommand"
               }
             }
           },
@@ -149,12 +149,12 @@
         }
       }
     },
-    "/api/projects/{id}": {
+    "/api/jobs/{id}": {
       "get": {
         "tags": [
-          "Projects"
+          "Jobs"
         ],
-        "operationId": "Projects_GetProjectById",
+        "operationId": "Jobs_GetJobById",
         "parameters": [
           {
             "name": "id",
@@ -173,7 +173,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ProjectDetailsDto"
+                  "$ref": "#/components/schemas/JobDetailsDto"
                 }
               }
             }
@@ -182,9 +182,9 @@
       },
       "put": {
         "tags": [
-          "Projects"
+          "Jobs"
         ],
-        "operationId": "Projects_Update",
+        "operationId": "Jobs_Update",
         "parameters": [
           {
             "name": "id",
@@ -202,7 +202,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateProjectCommand"
+                "$ref": "#/components/schemas/UpdateJobCommand"
               }
             }
           },
@@ -225,9 +225,9 @@
       },
       "delete": {
         "tags": [
-          "Projects"
+          "Jobs"
         ],
-        "operationId": "Projects_Delete",
+        "operationId": "Jobs_Delete",
         "parameters": [
           {
             "name": "id",
@@ -255,12 +255,12 @@
         }
       }
     },
-    "/api/projects/{id}/executor": {
+    "/api/jobs/{id}/executor": {
       "put": {
         "tags": [
-          "Projects"
+          "Jobs"
         ],
-        "operationId": "Projects_ChooseExecutor",
+        "operationId": "Jobs_ChooseExecutor",
         "parameters": [
           {
             "name": "id",
@@ -278,7 +278,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SetProjectExecutorCommand"
+                "$ref": "#/components/schemas/SetJobExecutorCommand"
               }
             }
           },
@@ -355,14 +355,14 @@
           }
         }
       },
-      "PaginatedListOfProjectDto": {
+      "PaginatedListOfJobDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "items": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/ProjectDto"
+              "$ref": "#/components/schemas/JobDto"
             }
           },
           "pageNumber": {
@@ -385,7 +385,7 @@
           }
         }
       },
-      "ProjectDto": {
+      "JobDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -406,11 +406,11 @@
             "format": "int32",
             "nullable": true
           },
-          "projectType": {
+          "jobType": {
             "nullable": true,
             "oneOf": [
               {
-                "$ref": "#/components/schemas/ProjectType"
+                "$ref": "#/components/schemas/JobType"
               }
             ]
           },
@@ -425,7 +425,7 @@
           }
         }
       },
-      "ProjectType": {
+      "JobType": {
         "type": "integer",
         "description": "",
         "x-enumNames": [
@@ -439,7 +439,7 @@
           2
         ]
       },
-      "ProjectDetailsDto": {
+      "JobDetailsDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -458,11 +458,11 @@
           "experienceLevel": {
             "$ref": "#/components/schemas/ExperienceLevel"
           },
-          "projectType": {
+          "jobType": {
             "nullable": true,
             "oneOf": [
               {
-                "$ref": "#/components/schemas/ProjectType"
+                "$ref": "#/components/schemas/JobType"
               }
             ]
           },
@@ -487,7 +487,7 @@
           2
         ]
       },
-      "CreateProjectCommand": {
+      "CreateJobCommand": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -499,11 +499,11 @@
             "type": "string",
             "nullable": true
           },
-          "projectType": {
+          "jobType": {
             "nullable": true,
             "oneOf": [
               {
-                "$ref": "#/components/schemas/ProjectType"
+                "$ref": "#/components/schemas/JobType"
               }
             ]
           },
@@ -517,7 +517,7 @@
           }
         }
       },
-      "UpdateProjectCommand": {
+      "UpdateJobCommand": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -533,11 +533,11 @@
             "type": "string",
             "nullable": true
           },
-          "projectType": {
+          "jobType": {
             "nullable": true,
             "oneOf": [
               {
-                "$ref": "#/components/schemas/ProjectType"
+                "$ref": "#/components/schemas/JobType"
               }
             ]
           },
@@ -553,13 +553,13 @@
             "nullable": true,
             "oneOf": [
               {
-                "$ref": "#/components/schemas/ProjectStatus"
+                "$ref": "#/components/schemas/JobStatus"
               }
             ]
           }
         }
       },
-      "ProjectStatus": {
+      "JobStatus": {
         "type": "integer",
         "description": "",
         "x-enumNames": [
@@ -573,7 +573,7 @@
           2
         ]
       },
-      "SetProjectExecutorCommand": {
+      "SetJobExecutorCommand": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
